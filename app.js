@@ -5,7 +5,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebas
 import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js";
 
 const appSettings = {
-  databaseUrl: "https://cart-companion-c7725-default-rtdb.firebaseio.com/",
+  databaseURL: "https://cart-companion-c7725-default-rtdb.firebaseio.com/",
 };
 
 const app = initializeApp(appSettings);
