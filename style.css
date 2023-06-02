@@ -23,7 +23,7 @@ img {
 input {
   color: #432000;
   background-color: #dce1eb;
-  border: 0;
+  border: 1px solid #000000;
   padding: 15px;
   border-radius: 8px;
   font-size: 20px;
@@ -42,4 +42,9 @@ button {
   text-align: center;
   font-family: "Rubik", sans-serif;
   cursor: pointer;
+}
+
+button:hover {
+  background-color: #8a2b3d;
+  font-weight: bold;
 }
