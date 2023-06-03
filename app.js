@@ -6,6 +6,7 @@ import {
   getDatabase,
   ref,
   push,
+  onValue,
 } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js";
 
 const appSettings = {
@@ -20,23 +21,46 @@ const shoppingListDB = ref(database, "shoppingList"); //create the reference in 
 const addButtonEl = document.getElementById("add-button");
 let inputFieldEl = document.getElementById("input-field");
 let shoppingListEl = document.getElementById("shopping-list");
-let item;
 
 addButtonEl.addEventListener("click", function () {
-  item = inputFieldEl.value;
+  let inputValue = inputFieldEl.value;
 
-  push(shoppingListDB, item); //push to database
-
+  push(shoppingListDB, inputValue); //push to database
   clearInputField();
-  addItemToShoppingList();
-
-  console.log(item);
 });
+
+onValue(shoppingListDB, function (snapshot) {
+  let itemsArr = Object.values(snapshot.val()); //fetch the items in the DB and stores it as an Array
+  clearAddToShoppingList();
+
+  for (let i = 0; i < itemsArr.length; i++) {
+    let currentItem = itemsArr[i];
+    let currentItemID = currentItem[0];
+    let currentItemValue = currentItem[1];
+
+
+    addItemToShoppingList(currentItem);
+  }
+});
+
+function clearAddToShoppingList() {
+  shoppingListEl.innerHTML = "";
+}
 
 function clearInputField() {
   inputFieldEl.value = "";
 }
 
-function addItemToShoppingList() {
-  shoppingListEl.innerHTML += `<li>${item}</li>`;
+function addItemToShoppingList(item) {
+  let itemId = item[0];
+  let itemValue = item[1];
+
+  let itemEl = document.createElement("li");
+  itemEl.textContent = itemValue;
+
+  shoppingListEl.append(itemEl)
 }
+
+// function deleteItem() {
+//   let currentItemInDB
+// }

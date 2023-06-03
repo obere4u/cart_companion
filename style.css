@@ -48,3 +48,32 @@ button:hover {
   background-color: #8a2b3d;
   font-weight: bold;
 }
+
+ul {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  list-style: none;
+  gap: 10px;
+  flex-wrap: wrap;
+
+  padding: 0;
+}
+
+ul li {
+  flex-grow: 1;
+  padding: 15px;
+  border-radius: 5px;
+
+  box-shadow: 1px 2px 3px rgba(0 0 0 /0.5);
+  color: #a52a2a;
+  font-weight: bold;
+  text-align: center;
+
+  cursor: pointer;
+}
+
+ul li:hover {
+  background: #8a2b3d;
+  color: #ffffff;
+}
