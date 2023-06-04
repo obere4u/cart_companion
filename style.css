@@ -26,7 +26,8 @@ input {
   margin: 10px 0;
 }
 
-button {
+/* add button style */
+#add-button {
   color: #fdfdfd;
   background-color: #ac485a;
   border: 0;
@@ -38,7 +39,7 @@ button {
   cursor: pointer;
 }
 
-button:hover {
+#add-button:hover {
   background-color: #8a2b3d;
   font-weight: bold;
 }
@@ -78,3 +79,70 @@ ul li:hover {
   max-width: 320px;
   margin: 30px auto;
 }
+
+/*  adding fade-in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* adding fade-out animation */
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+/* smooth transition */
+.transition {
+  transition: all 0.3s ease;
+}
+
+/* sorting buttons container */
+.sort-buttons-container {
+  margin: 20px 0;
+}
+
+.empty-list {
+  text-align: center;
+  font-style: italic;
+  color: gray;
+}
+
+
+/* toast container */
+#toast-container {
+  position: fixed;
+  z-index: 9999;
+}
+
+/*  toast message */
+.toast {
+  position: relative;
+  display: inline-block;
+  padding: 12px 20px;
+  background-color: #333;
+  color: #fff;
+  border-radius: 4px;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+/* toast message animation */
+.toast.show {
+  opacity: 1;
+}
+
+/* bought item */
+.bought {
+  opacity: 0.5;
+  text-decoration: line-through;
+}
+

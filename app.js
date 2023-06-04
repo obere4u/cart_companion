@@ -28,6 +28,21 @@ addButtonEl.addEventListener("click", function () {
 
   push(shoppingListDB, inputValue); //push to database
   clearInputField();
+
+  
+  showToast("Item added successfully!");
+});
+
+inputFieldEl.addEventListener("keyup", function (event) {
+  if (event.key === "Enter") {
+    let inputValue = inputFieldEl.value.trim();
+
+    if (inputValue !== "") {
+      push(shoppingListDB, inputValue);
+      clearInputField();
+      showToast("Item added successfully!");
+    }
+  }
 });
 
 onValue(shoppingListDB, function (snapshot) {
@@ -45,6 +60,7 @@ onValue(shoppingListDB, function (snapshot) {
     }
   } else {
     shoppingListEl.innerHTML = "No items here.... yet";
+    shoppingListEl.classList.add("empty-list");
   }
 });
 
@@ -62,16 +78,65 @@ function addItemToShoppingList(item) {
 
   let itemEl = document.createElement("li");
   itemEl.textContent = itemValue;
+  itemEl.classList.add("transition"); // Add transition class for smooth effect
 
   itemEl.addEventListener("dblclick", function () {
     let exactItemLocationInDB = ref(database, `shoppingList/${itemId}`);
 
-    remove(exactItemLocationInDB);
+    // Add fade-out animation when removing item
+    itemEl.classList.add("fadeOut");
+
+    // Remove item from database after animation completes
+    setTimeout(() => {
+      remove(exactItemLocationInDB);
+    }, 300); // Wait for 300ms (animation duration) before removing the item
+    showToast("Item removed successfully!");
   });
 
+  // Add fade-in animation when adding item
+  setTimeout(() => {
+    itemEl.classList.add("fadeIn");
+  }, 0); // Add the fade-in class immediately after creating the element
+
   shoppingListEl.append(itemEl);
+
 }
 
-// function deleteItem() {
-//   let currentItemInDB
-// }
+// show toast message
+function showToast(message) {
+  const toastContainer = document.getElementById("toast-container");
+
+  const toast = document.createElement("div");
+  toast.className = "toast";
+  toast.textContent = message;
+
+  toastContainer.appendChild(toast);
+
+  setTimeout(function () {
+    toast.classList.add("show");
+
+    setTimeout(function () {
+      toast.classList.remove("show");
+
+      setTimeout(function () {
+        toast.remove();
+      }, 300); // Remove the toast from the DOM after the animation duration
+    }, 3000);
+  }, 10); // Delay the toast display to ensure smooth animation
+}
+
+// mark an item as bought
+function markItemAsBought(itemEl) {
+  itemEl.classList.add("bought");
+}
+
+// Event listener for clicking on an item
+shoppingListEl.addEventListener("click", function (event) {
+  const clickedItem = event.target;
+
+  if (clickedItem.tagName === "LI") {
+    markItemAsBought(clickedItem);
+  }
+});
+
+
