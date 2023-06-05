@@ -16,6 +16,7 @@ addButtonEl.addEventListener("click", function () {
     showToast("Item added successfully!");
     updateEmptyListState();
   }
+  clearInputField();
 });
 
 // Load initial shopping list from localStorage
