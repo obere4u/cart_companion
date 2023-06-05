@@ -111,6 +111,7 @@ ul li:hover {
 }
 
 .empty-list {
+  display: none;
   text-align: center;
   font-style: italic;
   color: gray;

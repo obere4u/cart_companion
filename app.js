@@ -1,8 +1,10 @@
 
 //selectors
-const addButtonEl = document.getElementById("add-button");
-let inputFieldEl = document.getElementById("input-field");
-let shoppingListEl = document.getElementById("shopping-list");
+const addButtonEl = document.querySelector("#add-button");
+const emptyList = document.querySelector(".empty-list")
+let inputFieldEl = document.querySelector("#input-field");
+let shoppingListEl = document.querySelector("#shopping-list");
+
 
 addButtonEl.addEventListener("click", function () {
   let inputValue = inputFieldEl.value;
@@ -138,16 +140,14 @@ shoppingListEl.addEventListener("click", function (event) {
 // Function to update the empty list state
 function updateEmptyListState() {
   const shoppingListFromLocalStorage = localStorage.getItem("shoppingList");
-  if (shoppingListFromLocalStorage) {
+  if (shoppingListFromLocalStorage && shoppingListFromLocalStorage !== "null") {
     let itemsArr = JSON.parse(shoppingListFromLocalStorage);
     if (itemsArr.length > 0) {
-      shoppingListEl.classList.remove("empty-list"); // Remove the "empty-list" class
+      emptyList.style.display = "none"
     } else {
-      shoppingListEl.classList.add("empty-list");
-      shoppingListEl.innerHTML = "No items here.... yet";
+      emptyList.style.display = "block";
     }
   } else {
-    shoppingListEl.classList.add("empty-list");
-    shoppingListEl.innerHTML = "No items here.... yet";
+    emptyList.style.display = "block";
   }
 }
