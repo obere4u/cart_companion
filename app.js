@@ -3,8 +3,10 @@ const addButtonEl = document.querySelector("#add-button");
 const emptyListMsg = document.querySelector("#empty-list");
 const inputFieldEl = document.querySelector("#input-field");
 const clearListButton = document.querySelector("#clear-button");
- const toastContainer = document.querySelector("#toast-container");
+const toastContainer = document.querySelector("#toast-container");
 let shoppingListEl = document.querySelector("#shopping-list");
+
+let isPageReload = false;
 
 addButtonEl.addEventListener("click", function () {
   let inputValue = inputFieldEl.value;
@@ -13,13 +15,13 @@ addButtonEl.addEventListener("click", function () {
     addItemToShoppingList(inputValue); // Add item to shopping list
     clearInputField();
   }
-  clearInputField();
 });
 
 // Load initial shopping list from localStorage
 loadShoppingList();
 
 function loadShoppingList() {
+  isPageReload = true;
   const shoppingListFromLocalStorage = localStorage.getItem("shoppingList");
   if (shoppingListFromLocalStorage) {
     let itemsArr = JSON.parse(shoppingListFromLocalStorage);
@@ -33,12 +35,8 @@ function loadShoppingList() {
     }
   }
 
-  // Check if the flag is set to true (item added) before displaying the toast message
-  if (isItemAdded) {
-    showToast("Item added successfully!");
-    isItemAdded = false; // Reset the flag
-  }
-
+  isPageReload = false;
+  clearInputField(); // Clear the input field on page load
   updateEmptyListState();
 }
 
@@ -67,20 +65,26 @@ function addItemToShoppingList(itemValue) {
   }
 
   // Check if the item already exists in the shopping list
-  const existingItem = itemsArr.some((existingItem) => existingItem.value === itemValue);
+  const existingItem = itemsArr.some(
+    (existingItem) => existingItem.value === itemValue
+  );
+
   if (existingItem) {
     showToast("Item already exists!", true); // Display a toast message indicating the item already exists
     return; // Exit the function to avoid adding the item again
-  } else {
-
-    itemsArr.push(item);
-    localStorage.setItem("shoppingList", JSON.stringify(itemsArr));
-
-    isItemAdded = true;
-    createItemElement(item);
-    updateEmptyListState(); // Update the empty list state
-  
   }
+
+  itemsArr.push(item);
+  localStorage.setItem("shoppingList", JSON.stringify(itemsArr));
+
+  clearInputField(); // Clear the input field
+
+  if (!isPageReload) {
+    showToast("Item added successfully");
+  }
+
+  createItemElement(item);
+  updateEmptyListState(); // Update the empty list state
 }
 
 function createItemElement(item) {
@@ -142,7 +146,6 @@ function showToast(message, isError = false) {
   }, 500); // Delay the toast display to ensure smooth animation
 }
 
-
 // mark an item as bought
 function markItemAsBought(itemEl) {
   if (!itemEl.classList.contains("bought")) {
@@ -173,12 +176,9 @@ function updateEmptyListState() {
   }
 }
 
-
 clearListButton.addEventListener("click", function () {
   localStorage.removeItem("shoppingList");
   clearAddToShoppingList();
   showToast("Cart cleared successfully!");
   updateEmptyListState();
 });
-
-// localStorage.clear();
