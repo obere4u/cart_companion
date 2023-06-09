@@ -30,9 +30,15 @@ function loadShoppingList() {
         let currentItem = itemsArr[i].value; // Access the value property of the item object
         addItemToShoppingList(currentItem);
       }
-      updateEmptyListState();
     }
   }
+
+  // Check if the flag is set to true (item added) before displaying the toast message
+  if (isItemAdded) {
+    showToast("Item added successfully!");
+    isItemAdded = false; // Reset the flag
+  }
+
   updateEmptyListState();
 }
 
@@ -70,7 +76,7 @@ function addItemToShoppingList(itemValue) {
     itemsArr.push(item);
     localStorage.setItem("shoppingList", JSON.stringify(itemsArr));
 
-    showToast("Item added successfully!");
+    isItemAdded = true;
     createItemElement(item);
     updateEmptyListState(); // Update the empty list state
   
