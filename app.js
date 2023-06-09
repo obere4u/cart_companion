@@ -12,8 +12,6 @@ addButtonEl.addEventListener("click", function () {
   if (inputValue !== "") {
     addItemToShoppingList(inputValue); // Add item to shopping list
     clearInputField();
-
-    showToast("Item added successfully!");
   }
   clearInputField();
 });
@@ -63,17 +61,20 @@ function addItemToShoppingList(itemValue) {
   }
 
   // Check if the item already exists in the shopping list
-  const existingItem = itemsArr.find((item) => item.value === itemValue);
+  const existingItem = itemsArr.some((existingItem) => existingItem.value === itemValue);
   if (existingItem) {
-    showToast("Item already exists!"); // Display a toast message indicating the item already exists
+    showToast("Item already exists!", true); // Display a toast message indicating the item already exists
     return; // Exit the function to avoid adding the item again
+  } else {
+
+    itemsArr.push(item);
+    localStorage.setItem("shoppingList", JSON.stringify(itemsArr));
+
+    showToast("Item added successfully!");
+    createItemElement(item);
+    updateEmptyListState(); // Update the empty list state
+  
   }
-
-  itemsArr.push(item);
-  localStorage.setItem("shoppingList", JSON.stringify(itemsArr));
-
-  createItemElement(item);
-  updateEmptyListState(); // Update the empty list state
 }
 
 function createItemElement(item) {
@@ -110,9 +111,17 @@ function removeItemFromShoppingList(itemId) {
 }
 
 // show toast message
-function showToast(message) {
+function showToast(message, isError = false) {
+  //Array.from() search for an existing toast message with the same content
+  const existingToast = Array.from(toastContainer.children).find(
+    (toast) => toast.textContent === message
+  );
+  if (existingToast) {
+    return;
+  }
+
   const toast = document.createElement("div");
-  toast.className = "toast";
+  toast.className = `toast ${isError ? " error" : ""}`;
   toast.textContent = message;
 
   toastContainer.appendChild(toast);
@@ -121,11 +130,12 @@ function showToast(message) {
 
   setTimeout(function () {
     toast.classList.remove("show");
-
+    setTimeout(function () {
       toast.remove();
-     // Remove the toast from the DOM after the animation duration
-  }, 300); // Delay the toast display to ensure smooth animation
+    }, 300); // Remove the toast from the DOM after the animation duration
+  }, 500); // Delay the toast display to ensure smooth animation
 }
+
 
 // mark an item as bought
 function markItemAsBought(itemEl) {
