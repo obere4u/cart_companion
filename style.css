@@ -3,7 +3,7 @@ body {
   margin: 0;
   padding: 0;
   font-family: "Rubik", sans-serif;
-  background-color: #EEF0F4;
+  background-color: #eef0f4;
   color: #432000;
   -webkit-user-select: none;
   user-select: none; /*so that users can't select anything*/
@@ -24,24 +24,6 @@ input {
   text-align: center;
   font-family: "Rubik", sans-serif;
   margin: 10px 0;
-}
-
-/* add button style */
-#add-button {
-  color: #fdfdfd;
-  background-color: #ac485a;
-  border: 0;
-  padding: 15px;
-  border-radius: 8px;
-  font-size: 20px;
-  text-align: center;
-  font-family: "Rubik", sans-serif;
-  cursor: pointer;
-}
-
-#add-button:hover {
-  background-color: #8a2b3d;
-  font-weight: bold;
 }
 
 ul {
@@ -110,13 +92,12 @@ ul li:hover {
   margin: 20px 0;
 }
 
-.empty-list {
+#empty-list {
   display: none;
   text-align: center;
   font-style: italic;
   color: gray;
 }
-
 
 /* toast container */
 #toast-container {
@@ -126,14 +107,13 @@ ul li:hover {
 
 /*  toast message */
 .toast {
-  position: relative;
   display: inline-block;
   padding: 12px 20px;
   background-color: #333;
   color: #fff;
   border-radius: 4px;
-  opacity: 0;
-  transition: opacity 0.3s ease-in-out;
+  opacity: 1;
+  transition: opacity 0.1s ease-in-out;
 }
 
 /* toast message animation */
@@ -147,3 +127,35 @@ ul li:hover {
   text-decoration: line-through;
 }
 
+#action-button {
+  display: flex;
+  padding-inline: 0.3em;
+}
+
+/* add / clear button style */
+#add-button,
+#clear-button {
+  color: #fdfdfd;
+  background-color: #ac485a;
+  border: 0;
+  padding: 15px;
+  border-radius: 8px;
+  font-size: 20px;
+  text-align: center;
+  font-family: "Rubik", sans-serif;
+  cursor: pointer;
+}
+
+#clear-button {
+  margin-left: auto;
+}
+
+#add-button:hover {
+  background-color: #8a2b3d;
+  font-weight: bold;
+}
+
+#clear-button:hover {
+  background: #a50303;
+  font-weight: bold;
+}
