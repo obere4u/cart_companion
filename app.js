@@ -8,6 +8,7 @@ let shoppingListEl = document.querySelector("#shopping-list");
 
 let isPageReload = false;
 
+//Event listener 
 addButtonEl.addEventListener("click", function () {
   let inputValue = inputFieldEl.value;
 
@@ -50,6 +51,7 @@ function clearInputField() {
   inputFieldEl.value = "";
 }
 
+//Add Item to shopping list
 function addItemToShoppingList(itemValue) {
   let itemId = Date.now().toString(); // Generate a unique ID for the item
 
@@ -87,6 +89,7 @@ function addItemToShoppingList(itemValue) {
   updateEmptyListState(); // Update the empty list state
 }
 
+//Display the shopping list
 function createItemElement(item) {
   let itemEl = document.createElement("li");
   itemEl.textContent = item.value;
@@ -107,6 +110,7 @@ function createItemElement(item) {
   shoppingListEl.append(itemEl);
 }
 
+//Remove item from the shopping list
 function removeItemFromShoppingList(itemId) {
   let itemsArr = [];
 
@@ -162,7 +166,7 @@ shoppingListEl.addEventListener("click", function (event) {
   }
 });
 
-// Function to update the empty list state
+// Update the empty list state
 function updateEmptyListState() {
   const shoppingListFromLocalStorage = localStorage.getItem("shoppingList");
   const itemsArr = shoppingListFromLocalStorage
