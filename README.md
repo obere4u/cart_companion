@@ -4,6 +4,7 @@ Welcome to the Cart Companion App! This app helps you manage your shopping list 
 
 [Live Preview](https://cart-companion.netlify.app/)
 
+
 ## Table of Contents
 
 - [Cart Companion App](#cart-companion-app)
